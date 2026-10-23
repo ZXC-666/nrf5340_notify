@@ -1,0 +1,19 @@
+# Zephyr / west build output
+build/
+build_*/
+*.hex
+*.bin
+*.elf
+*.map
+
+# Toolchain / IDE
+.west/
+.vscode/
+*.uvguix.*
+JLinkLog.txt
+JLinkSettings.ini
+twister-out*/
+
+# OS
+.DS_Store
+Thumbs.db

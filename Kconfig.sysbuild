@@ -1,0 +1,19 @@
+#
+# Copyright (c) 2023 Nordic Semiconductor
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+# 让 sysbuild 生成 merged.hex(同时含 app 核 + 网络核),方便一次烧录
+config MERGED_HEX_FILES
+	default y if !SOC_SERIES_NRF54H
+
+# 在网络核(cpunet)上跑 ipc_radio,提供 BLE 控制器
+config NRF_DEFAULT_IPC_RADIO
+	default y
+
+# ipc_radio 里的蓝牙 HCI IPC 分支(与应用核的 CONFIG_BT_HCI_IPC 对应)
+config NETCORE_IPC_RADIO_BT_HCI_IPC
+	default y
+
+source "share/sysbuild/Kconfig"

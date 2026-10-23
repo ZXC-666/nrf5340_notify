@@ -1,0 +1,37 @@
+/*
+ * ILI9341 wiring (Arduino headers on nRF5340 DK):
+ * SCK=D13/P1.15, MOSI=D11/P1.13, CS=D10/P1.12,
+ * DC=D9/P1.11, RESET=D8/P1.10.
+ *
+ * The display uses the DK's Arduino SPI controller (spi4/arduino_spi).
+ */
+
+#include <zephyr/dt-bindings/display/panel.h>
+
+/ {
+	chosen {
+		zephyr,display = &ili9341;
+	};
+
+	mipi_dbi {
+		compatible = "zephyr,mipi-dbi-spi";
+		spi-dev = <&arduino_spi>;
+		dc-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpio1 10 GPIO_ACTIVE_LOW>;
+		write-only;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ili9341: ili9341@0 {
+			compatible = "ilitek,ili9341";
+			reg = <0>;
+			mipi-max-frequency = <32000000>;
+			mipi-mode = "MIPI_DBI_MODE_SPI_4WIRE";
+			width = <240>;
+			height = <320>;
+			/* Module installed in landscape orientation. */
+			rotation = <90>;
+			pixel-format = <PANEL_PIXEL_FORMAT_RGB_565>;
+		};
+	};
+};
